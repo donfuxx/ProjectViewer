@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.appham.projectviewer.api.ApiFactory;
 import com.appham.projectviewer.api.ProjectsApi;
@@ -59,16 +60,19 @@ public class ProjectListFragment extends Fragment {
         ProjectsApi projectsApi = ApiFactory.createProjectsApi();
         projectsApi.getProjects().subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(this::updateList, Throwable::printStackTrace);
+                .subscribe(this::onNext, this::onError);
     }
 
-    private int updateList(ProjectsList projectsList) {
-
+    private int onNext(ProjectsList projectsList) {
         projectAdapter.setProjects(projectsList.projects);
-
         projectAdapter.notifyDataSetChanged();
 
         return Log.i("subscribe", projectsList.projects.size() + " projects loaded");
 
+    }
+
+    private void onError(Throwable throwable) {
+        throwable.printStackTrace();
+        Toast.makeText(this.getActivity(), throwable.getLocalizedMessage(), Toast.LENGTH_LONG).show();
     }
 }
