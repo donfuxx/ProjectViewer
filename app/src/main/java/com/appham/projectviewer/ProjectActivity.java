@@ -1,15 +1,12 @@
 package com.appham.projectviewer;
 
-import android.annotation.SuppressLint;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.text.SpannableString;
+import android.text.SpannableStringBuilder;
 import android.text.style.StyleSpan;
 import android.util.Log;
-import android.view.Gravity;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.appham.projectviewer.model.Project;
@@ -34,14 +31,11 @@ public class ProjectActivity extends AppCompatActivity {
             project = (Project) bundle.get("project");
         }
 
-        LinearLayout layout = findViewById(R.id.layProjectDetails);
-
-
         // get all fields and loop through them to display each
         List<Field> fields = Arrays.asList(project.getClass().getDeclaredFields());
         String name;
         Object value;
-        SpannableString styledStr;
+        SpannableStringBuilder spanBuilder = new SpannableStringBuilder();
 
         for (Field field : fields) {
             try {
@@ -49,28 +43,10 @@ public class ProjectActivity extends AppCompatActivity {
                 value = field.get(project);
                 Log.i("fields", "name: " + name + " - value: " + value + " type: " + field.getType());
 
-                styledStr = new SpannableString(name + ": \n" + value);
-                styledStr.setSpan(new StyleSpan(Typeface.BOLD), 0, name.length(), 0);
-
-                // attach view to layout
-                TextView textView = new TextView(this);
-                textView.setText(styledStr);
-                textView.setPadding(10, 10, 10, 10);
-                textView.setGravity(Gravity.CENTER);
-
-                layout.addView(textView);
-
-                if ("logo".equals(name)) {
-
-                    // attach img to layout
-                    ImageView imgView = new ImageView(this);
-                    imgView.setPadding(10, 10, 10, 10);
-                    Picasso.with(this).load(project.logo)
-                            .error(R.mipmap.ic_launcher_round)
-                            .into(imgView);
-
-                    layout.addView(imgView);
-                }
+                int startIndex = spanBuilder.length();
+                spanBuilder.append(name).append(": \n")
+                        .append(String.valueOf(value)).append("\n\n")
+                        .setSpan(new StyleSpan(Typeface.BOLD), startIndex, startIndex + name.length(), 0);
 
                 //TODO: Properly display fields that are of a type other than String, int etc.
 
@@ -78,6 +54,14 @@ public class ProjectActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
         }
+
+        TextView txtDetails = findViewById(R.id.txtProjectDetails);
+        txtDetails.setText(spanBuilder);
+
+        ImageView imgView = findViewById(R.id.imgProjectDetails);
+        Picasso.with(this).load(project.logo)
+                .error(R.mipmap.ic_launcher_round)
+                .into(imgView);
 
 
     }
