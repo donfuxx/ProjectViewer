@@ -43,13 +43,13 @@ public class ProjectAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         if (holder instanceof ProjectHolder) {
             ProjectHolder projectHolder = (ProjectHolder) holder;
             Project project = projects.get(position);
-            projectHolder.txtName.setText(project.name);
-            projectHolder.txtDesc.setText(project.description);
-            projectHolder.txtCompany.setText(project.company.name);
+            projectHolder.txtName.setText(project.getName());
+            projectHolder.txtDesc.setText(project.getDescription());
+            projectHolder.txtCompany.setText(project.getCompany().getName());
 
             Context context = holder.itemView.getContext();
 
-            if (project.logo != null) {
+            if (project.getLogo() != null) {
 
                 // rotating placeholder image
                 RotateDrawable placeholder = (RotateDrawable) ContextCompat.getDrawable(context,
@@ -63,7 +63,7 @@ public class ProjectAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 int screenWidthPx = Resources.getSystem().getDisplayMetrics().widthPixels;
                 int screenHeightPx = Resources.getSystem().getDisplayMetrics().heightPixels;
 
-                Picasso.with(holder.itemView.getContext()).load(project.logo)
+                Picasso.with(holder.itemView.getContext()).load(project.getLogo())
                         .resize(Math.min(screenWidthPx / 3, screenHeightPx / 2),
                                 Math.min(screenWidthPx / 4, screenHeightPx / 3))
                         .onlyScaleDown()

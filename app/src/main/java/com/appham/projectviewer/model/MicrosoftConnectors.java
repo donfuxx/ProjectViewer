@@ -7,38 +7,57 @@ import android.os.Parcelable;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class MicrosoftConnectors implements Parcelable {
+import org.apache.commons.lang3.builder.ToStringBuilder;
+
+public class MicrosoftConnectors implements Parcelable
+{
 
     @SerializedName("enabled")
     @Expose
-    public Boolean enabled;
+    private boolean enabled;
+    public final static Creator<MicrosoftConnectors> CREATOR = new Creator<MicrosoftConnectors>() {
 
-    @Override
-    public int describeContents() {
-        return 0;
+
+        @SuppressWarnings({
+            "unchecked"
+        })
+        public MicrosoftConnectors createFromParcel(Parcel in) {
+            return new MicrosoftConnectors(in);
+        }
+
+        public MicrosoftConnectors[] newArray(int size) {
+            return (new MicrosoftConnectors[size]);
+        }
+
     }
+    ;
 
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeValue(this.enabled);
+    protected MicrosoftConnectors(Parcel in) {
+        this.enabled = ((boolean) in.readValue((boolean.class.getClassLoader())));
     }
 
     public MicrosoftConnectors() {
     }
 
-    protected MicrosoftConnectors(Parcel in) {
-        this.enabled = (Boolean) in.readValue(Boolean.class.getClassLoader());
+    public boolean isEnabled() {
+        return enabled;
     }
 
-    public static final Parcelable.Creator<MicrosoftConnectors> CREATOR = new Parcelable.Creator<MicrosoftConnectors>() {
-        @Override
-        public MicrosoftConnectors createFromParcel(Parcel source) {
-            return new MicrosoftConnectors(source);
-        }
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
 
-        @Override
-        public MicrosoftConnectors[] newArray(int size) {
-            return new MicrosoftConnectors[size];
-        }
-    };
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this).append("enabled", enabled).toString();
+    }
+
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeValue(enabled);
+    }
+
+    public int describeContents() {
+        return  0;
+    }
+
 }

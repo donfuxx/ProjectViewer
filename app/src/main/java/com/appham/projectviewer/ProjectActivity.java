@@ -39,6 +39,7 @@ public class ProjectActivity extends AppCompatActivity {
             for (Field field : fields) {
                 try {
                     name = field.getName();
+                    field.setAccessible(true);
                     value = field.get(project);
                     Log.i("fields", "name: " + name + " - value: " + value + " type: " + field.getType());
 
@@ -58,7 +59,7 @@ public class ProjectActivity extends AppCompatActivity {
             txtDetails.setText(spanBuilder);
 
             ImageView imgView = findViewById(R.id.imgProjectDetails);
-            Picasso.with(this).load(project.logo)
+            Picasso.with(this).load(project.getLogo())
                     .error(R.mipmap.ic_launcher_round)
                     .into(imgView);
 

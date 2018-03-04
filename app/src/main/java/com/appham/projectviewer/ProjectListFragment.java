@@ -64,10 +64,10 @@ public class ProjectListFragment extends Fragment {
     }
 
     private int onNext(ProjectsList projectsList) {
-        projectAdapter.setProjects(projectsList.projects);
+        projectAdapter.setProjects(projectsList.getProjects());
         projectAdapter.notifyDataSetChanged();
 
-        return Log.i("subscribe", projectsList.projects.size() + " projects loaded");
+        return Log.i("subscribe", projectsList.getProjects().size() + " projects loaded");
 
     }
 

@@ -1,37 +1,47 @@
 
 package com.appham.projectviewer.model;
 
-
 import android.os.Parcel;
 import android.os.Parcelable;
 
-public class BoardData implements Parcelable {
+import org.apache.commons.lang3.builder.ToStringBuilder;
+
+public class BoardData implements Parcelable
+{
+
+    public final static Creator<BoardData> CREATOR = new Creator<BoardData>() {
 
 
-    @Override
-    public int describeContents() {
-        return 0;
+        @SuppressWarnings({
+            "unchecked"
+        })
+        public BoardData createFromParcel(Parcel in) {
+            return new BoardData(in);
+        }
+
+        public BoardData[] newArray(int size) {
+            return (new BoardData[size]);
+        }
+
     }
+    ;
 
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
+    protected BoardData(Parcel in) {
     }
 
     public BoardData() {
     }
 
-    protected BoardData(Parcel in) {
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this).toString();
     }
 
-    public static final Parcelable.Creator<BoardData> CREATOR = new Parcelable.Creator<BoardData>() {
-        @Override
-        public BoardData createFromParcel(Parcel source) {
-            return new BoardData(source);
-        }
+    public void writeToParcel(Parcel dest, int flags) {
+    }
 
-        @Override
-        public BoardData[] newArray(int size) {
-            return new BoardData[size];
-        }
-    };
+    public int describeContents() {
+        return  0;
+    }
+
 }

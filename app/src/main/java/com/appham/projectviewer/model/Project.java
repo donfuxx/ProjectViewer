@@ -4,189 +4,440 @@ package com.appham.projectviewer.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import java.util.ArrayList;
-import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Project implements Parcelable {
+import org.apache.commons.lang3.builder.ToStringBuilder;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class Project implements Parcelable
+{
 
     @SerializedName("replyByEmailEnabled")
     @Expose
-    public Boolean replyByEmailEnabled;
+    private boolean replyByEmailEnabled;
     @SerializedName("starred")
     @Expose
-    public Boolean starred;
+    private boolean starred;
     @SerializedName("show-announcement")
     @Expose
-    public Boolean showAnnouncement;
+    private boolean showAnnouncement;
     @SerializedName("harvest-timers-enabled")
     @Expose
-    public Boolean harvestTimersEnabled;
+    private boolean harvestTimersEnabled;
     @SerializedName("status")
     @Expose
-    public String status;
+    private String status;
     @SerializedName("subStatus")
     @Expose
-    public String subStatus;
+    private String subStatus;
     @SerializedName("defaultPrivacy")
     @Expose
-    public String defaultPrivacy;
+    private String defaultPrivacy;
     @SerializedName("integrations")
     @Expose
-    public Integrations integrations;
+    private Integrations integrations;
     @SerializedName("created-on")
     @Expose
-    public String createdOn;
+    private String createdOn;
     @SerializedName("category")
     @Expose
-    public Category category;
+    private Category category;
     @SerializedName("filesAutoNewVersion")
     @Expose
-    public Boolean filesAutoNewVersion;
+    private boolean filesAutoNewVersion;
     @SerializedName("overview-start-page")
     @Expose
-    public String overviewStartPage;
+    private String overviewStartPage;
     @SerializedName("tags")
     @Expose
-    public List<Tag> tags = null;
+    private List<Tag> tags = new ArrayList<Tag>();
     @SerializedName("logo")
     @Expose
-    public String logo;
+    private String logo;
     @SerializedName("startDate")
     @Expose
-    public String startDate;
+    private String startDate;
     @SerializedName("id")
     @Expose
-    public String id;
+    private String id;
     @SerializedName("last-changed-on")
     @Expose
-    public String lastChangedOn;
+    private String lastChangedOn;
     @SerializedName("endDate")
     @Expose
-    public String endDate;
+    private String endDate;
     @SerializedName("defaults")
     @Expose
-    public Defaults defaults;
+    private Defaults defaults;
     @SerializedName("company")
     @Expose
-    public Company company;
+    private Company company;
     @SerializedName("tasks-start-page")
     @Expose
-    public String tasksStartPage;
+    private String tasksStartPage;
     @SerializedName("name")
     @Expose
-    public String name;
+    private String name;
     @SerializedName("privacyEnabled")
     @Expose
-    public Boolean privacyEnabled;
+    private boolean privacyEnabled;
     @SerializedName("description")
     @Expose
-    public String description;
+    private String description;
     @SerializedName("announcement")
     @Expose
-    public String announcement;
+    private String announcement;
     @SerializedName("isProjectAdmin")
     @Expose
-    public Boolean isProjectAdmin;
+    private boolean isProjectAdmin;
     @SerializedName("start-page")
     @Expose
-    public String startPage;
+    private String startPage;
     @SerializedName("notifyeveryone")
     @Expose
-    public Boolean notifyeveryone;
+    private boolean notifyeveryone;
     @SerializedName("boardData")
     @Expose
-    public BoardData boardData;
+    private BoardData boardData;
     @SerializedName("announcementHTML")
     @Expose
-    public String announcementHTML;
+    private String announcementHTML;
+    public final static Creator<Project> CREATOR = new Creator<Project>() {
+
+
+        @SuppressWarnings({
+            "unchecked"
+        })
+        public Project createFromParcel(Parcel in) {
+            return new Project(in);
+        }
+
+        public Project[] newArray(int size) {
+            return (new Project[size]);
+        }
+
+    }
+    ;
+
+    protected Project(Parcel in) {
+        this.replyByEmailEnabled = ((boolean) in.readValue((boolean.class.getClassLoader())));
+        this.starred = ((boolean) in.readValue((boolean.class.getClassLoader())));
+        this.showAnnouncement = ((boolean) in.readValue((boolean.class.getClassLoader())));
+        this.harvestTimersEnabled = ((boolean) in.readValue((boolean.class.getClassLoader())));
+        this.status = ((String) in.readValue((String.class.getClassLoader())));
+        this.subStatus = ((String) in.readValue((String.class.getClassLoader())));
+        this.defaultPrivacy = ((String) in.readValue((String.class.getClassLoader())));
+        this.integrations = ((Integrations) in.readValue((Integrations.class.getClassLoader())));
+        this.createdOn = ((String) in.readValue((String.class.getClassLoader())));
+        this.category = ((Category) in.readValue((Category.class.getClassLoader())));
+        this.filesAutoNewVersion = ((boolean) in.readValue((boolean.class.getClassLoader())));
+        this.overviewStartPage = ((String) in.readValue((String.class.getClassLoader())));
+        in.readList(this.tags, (Tag.class.getClassLoader()));
+        this.logo = ((String) in.readValue((String.class.getClassLoader())));
+        this.startDate = ((String) in.readValue((String.class.getClassLoader())));
+        this.id = ((String) in.readValue((String.class.getClassLoader())));
+        this.lastChangedOn = ((String) in.readValue((String.class.getClassLoader())));
+        this.endDate = ((String) in.readValue((String.class.getClassLoader())));
+        this.defaults = ((Defaults) in.readValue((Defaults.class.getClassLoader())));
+        this.company = ((Company) in.readValue((Company.class.getClassLoader())));
+        this.tasksStartPage = ((String) in.readValue((String.class.getClassLoader())));
+        this.name = ((String) in.readValue((String.class.getClassLoader())));
+        this.privacyEnabled = ((boolean) in.readValue((boolean.class.getClassLoader())));
+        this.description = ((String) in.readValue((String.class.getClassLoader())));
+        this.announcement = ((String) in.readValue((String.class.getClassLoader())));
+        this.isProjectAdmin = ((boolean) in.readValue((boolean.class.getClassLoader())));
+        this.startPage = ((String) in.readValue((String.class.getClassLoader())));
+        this.notifyeveryone = ((boolean) in.readValue((boolean.class.getClassLoader())));
+        this.boardData = ((BoardData) in.readValue((BoardData.class.getClassLoader())));
+        this.announcementHTML = ((String) in.readValue((String.class.getClassLoader())));
+    }
 
     public Project() {
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
+    public boolean isReplyByEmailEnabled() {
+        return replyByEmailEnabled;
+    }
+
+    public void setReplyByEmailEnabled(boolean replyByEmailEnabled) {
+        this.replyByEmailEnabled = replyByEmailEnabled;
+    }
+
+    public boolean isStarred() {
+        return starred;
+    }
+
+    public void setStarred(boolean starred) {
+        this.starred = starred;
+    }
+
+    public boolean isShowAnnouncement() {
+        return showAnnouncement;
+    }
+
+    public void setShowAnnouncement(boolean showAnnouncement) {
+        this.showAnnouncement = showAnnouncement;
+    }
+
+    public boolean isHarvestTimersEnabled() {
+        return harvestTimersEnabled;
+    }
+
+    public void setHarvestTimersEnabled(boolean harvestTimersEnabled) {
+        this.harvestTimersEnabled = harvestTimersEnabled;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getSubStatus() {
+        return subStatus;
+    }
+
+    public void setSubStatus(String subStatus) {
+        this.subStatus = subStatus;
+    }
+
+    public String getDefaultPrivacy() {
+        return defaultPrivacy;
+    }
+
+    public void setDefaultPrivacy(String defaultPrivacy) {
+        this.defaultPrivacy = defaultPrivacy;
+    }
+
+    public Integrations getIntegrations() {
+        return integrations;
+    }
+
+    public void setIntegrations(Integrations integrations) {
+        this.integrations = integrations;
+    }
+
+    public String getCreatedOn() {
+        return createdOn;
+    }
+
+    public void setCreatedOn(String createdOn) {
+        this.createdOn = createdOn;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+
+    public boolean isFilesAutoNewVersion() {
+        return filesAutoNewVersion;
+    }
+
+    public void setFilesAutoNewVersion(boolean filesAutoNewVersion) {
+        this.filesAutoNewVersion = filesAutoNewVersion;
+    }
+
+    public String getOverviewStartPage() {
+        return overviewStartPage;
+    }
+
+    public void setOverviewStartPage(String overviewStartPage) {
+        this.overviewStartPage = overviewStartPage;
+    }
+
+    public List<Tag> getTags() {
+        return tags;
+    }
+
+    public void setTags(List<Tag> tags) {
+        this.tags = tags;
+    }
+
+    public String getLogo() {
+        return logo;
+    }
+
+    public void setLogo(String logo) {
+        this.logo = logo;
+    }
+
+    public String getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(String startDate) {
+        this.startDate = startDate;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getLastChangedOn() {
+        return lastChangedOn;
+    }
+
+    public void setLastChangedOn(String lastChangedOn) {
+        this.lastChangedOn = lastChangedOn;
+    }
+
+    public String getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(String endDate) {
+        this.endDate = endDate;
+    }
+
+    public Defaults getDefaults() {
+        return defaults;
+    }
+
+    public void setDefaults(Defaults defaults) {
+        this.defaults = defaults;
+    }
+
+    public Company getCompany() {
+        return company;
+    }
+
+    public void setCompany(Company company) {
+        this.company = company;
+    }
+
+    public String getTasksStartPage() {
+        return tasksStartPage;
+    }
+
+    public void setTasksStartPage(String tasksStartPage) {
+        this.tasksStartPage = tasksStartPage;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public boolean isPrivacyEnabled() {
+        return privacyEnabled;
+    }
+
+    public void setPrivacyEnabled(boolean privacyEnabled) {
+        this.privacyEnabled = privacyEnabled;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getAnnouncement() {
+        return announcement;
+    }
+
+    public void setAnnouncement(String announcement) {
+        this.announcement = announcement;
+    }
+
+    public boolean isIsProjectAdmin() {
+        return isProjectAdmin;
+    }
+
+    public void setIsProjectAdmin(boolean isProjectAdmin) {
+        this.isProjectAdmin = isProjectAdmin;
+    }
+
+    public String getStartPage() {
+        return startPage;
+    }
+
+    public void setStartPage(String startPage) {
+        this.startPage = startPage;
+    }
+
+    public boolean isNotifyeveryone() {
+        return notifyeveryone;
+    }
+
+    public void setNotifyeveryone(boolean notifyeveryone) {
+        this.notifyeveryone = notifyeveryone;
+    }
+
+    public BoardData getBoardData() {
+        return boardData;
+    }
+
+    public void setBoardData(BoardData boardData) {
+        this.boardData = boardData;
+    }
+
+    public String getAnnouncementHTML() {
+        return announcementHTML;
+    }
+
+    public void setAnnouncementHTML(String announcementHTML) {
+        this.announcementHTML = announcementHTML;
     }
 
     @Override
+    public String toString() {
+        return new ToStringBuilder(this).append("replyByEmailEnabled", replyByEmailEnabled).append("starred", starred).append("showAnnouncement", showAnnouncement).append("harvestTimersEnabled", harvestTimersEnabled).append("status", status).append("subStatus", subStatus).append("defaultPrivacy", defaultPrivacy).append("integrations", integrations).append("createdOn", createdOn).append("category", category).append("filesAutoNewVersion", filesAutoNewVersion).append("overviewStartPage", overviewStartPage).append("tags", tags).append("logo", logo).append("startDate", startDate).append("id", id).append("lastChangedOn", lastChangedOn).append("endDate", endDate).append("defaults", defaults).append("company", company).append("tasksStartPage", tasksStartPage).append("name", name).append("privacyEnabled", privacyEnabled).append("description", description).append("announcement", announcement).append("isProjectAdmin", isProjectAdmin).append("startPage", startPage).append("notifyeveryone", notifyeveryone).append("boardData", boardData).append("announcementHTML", announcementHTML).toString();
+    }
+
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeValue(this.replyByEmailEnabled);
-        dest.writeValue(this.starred);
-        dest.writeValue(this.showAnnouncement);
-        dest.writeValue(this.harvestTimersEnabled);
-        dest.writeString(this.status);
-        dest.writeString(this.subStatus);
-        dest.writeString(this.defaultPrivacy);
-        dest.writeParcelable(this.integrations, flags);
-        dest.writeString(this.createdOn);
-        dest.writeParcelable(this.category, flags);
-        dest.writeValue(this.filesAutoNewVersion);
-        dest.writeString(this.overviewStartPage);
-        dest.writeList(this.tags);
-        dest.writeString(this.logo);
-        dest.writeString(this.startDate);
-        dest.writeString(this.id);
-        dest.writeString(this.lastChangedOn);
-        dest.writeString(this.endDate);
-        dest.writeParcelable(this.defaults, flags);
-        dest.writeParcelable(this.company, flags);
-        dest.writeString(this.tasksStartPage);
-        dest.writeString(this.name);
-        dest.writeValue(this.privacyEnabled);
-        dest.writeString(this.description);
-        dest.writeString(this.announcement);
-        dest.writeValue(this.isProjectAdmin);
-        dest.writeString(this.startPage);
-        dest.writeValue(this.notifyeveryone);
-        dest.writeParcelable(this.boardData, flags);
-        dest.writeString(this.announcementHTML);
+        dest.writeValue(replyByEmailEnabled);
+        dest.writeValue(starred);
+        dest.writeValue(showAnnouncement);
+        dest.writeValue(harvestTimersEnabled);
+        dest.writeValue(status);
+        dest.writeValue(subStatus);
+        dest.writeValue(defaultPrivacy);
+        dest.writeValue(integrations);
+        dest.writeValue(createdOn);
+        dest.writeValue(category);
+        dest.writeValue(filesAutoNewVersion);
+        dest.writeValue(overviewStartPage);
+        dest.writeList(tags);
+        dest.writeValue(logo);
+        dest.writeValue(startDate);
+        dest.writeValue(id);
+        dest.writeValue(lastChangedOn);
+        dest.writeValue(endDate);
+        dest.writeValue(defaults);
+        dest.writeValue(company);
+        dest.writeValue(tasksStartPage);
+        dest.writeValue(name);
+        dest.writeValue(privacyEnabled);
+        dest.writeValue(description);
+        dest.writeValue(announcement);
+        dest.writeValue(isProjectAdmin);
+        dest.writeValue(startPage);
+        dest.writeValue(notifyeveryone);
+        dest.writeValue(boardData);
+        dest.writeValue(announcementHTML);
     }
 
-    protected Project(Parcel in) {
-        this.replyByEmailEnabled = (Boolean) in.readValue(Boolean.class.getClassLoader());
-        this.starred = (Boolean) in.readValue(Boolean.class.getClassLoader());
-        this.showAnnouncement = (Boolean) in.readValue(Boolean.class.getClassLoader());
-        this.harvestTimersEnabled = (Boolean) in.readValue(Boolean.class.getClassLoader());
-        this.status = in.readString();
-        this.subStatus = in.readString();
-        this.defaultPrivacy = in.readString();
-        this.integrations = in.readParcelable(Integrations.class.getClassLoader());
-        this.createdOn = in.readString();
-        this.category = in.readParcelable(Category.class.getClassLoader());
-        this.filesAutoNewVersion = (Boolean) in.readValue(Boolean.class.getClassLoader());
-        this.overviewStartPage = in.readString();
-        this.tags = new ArrayList<Tag>();
-        in.readList(this.tags, Tag.class.getClassLoader());
-        this.logo = in.readString();
-        this.startDate = in.readString();
-        this.id = in.readString();
-        this.lastChangedOn = in.readString();
-        this.endDate = in.readString();
-        this.defaults = in.readParcelable(Defaults.class.getClassLoader());
-        this.company = in.readParcelable(Company.class.getClassLoader());
-        this.tasksStartPage = in.readString();
-        this.name = in.readString();
-        this.privacyEnabled = (Boolean) in.readValue(Boolean.class.getClassLoader());
-        this.description = in.readString();
-        this.announcement = in.readString();
-        this.isProjectAdmin = (Boolean) in.readValue(Boolean.class.getClassLoader());
-        this.startPage = in.readString();
-        this.notifyeveryone = (Boolean) in.readValue(Boolean.class.getClassLoader());
-        this.boardData = in.readParcelable(BoardData.class.getClassLoader());
-        this.announcementHTML = in.readString();
+    public int describeContents() {
+        return  0;
     }
 
-    public static final Creator<Project> CREATOR = new Creator<Project>() {
-        @Override
-        public Project createFromParcel(Parcel source) {
-            return new Project(source);
-        }
-
-        @Override
-        public Project[] newArray(int size) {
-            return new Project[size];
-        }
-    };
 }

@@ -7,48 +7,83 @@ import android.os.Parcelable;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Category implements Parcelable {
+import org.apache.commons.lang3.builder.ToStringBuilder;
+
+public class Category implements Parcelable
+{
 
     @SerializedName("name")
     @Expose
-    public String name;
+    private String name;
     @SerializedName("id")
     @Expose
-    public String id;
+    private String id;
     @SerializedName("color")
     @Expose
-    public String color;
+    private String color;
+    public final static Creator<Category> CREATOR = new Creator<Category>() {
 
-    @Override
-    public int describeContents() {
-        return 0;
+
+        @SuppressWarnings({
+            "unchecked"
+        })
+        public Category createFromParcel(Parcel in) {
+            return new Category(in);
+        }
+
+        public Category[] newArray(int size) {
+            return (new Category[size]);
+        }
+
     }
+    ;
 
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(this.name);
-        dest.writeString(this.id);
-        dest.writeString(this.color);
+    protected Category(Parcel in) {
+        this.name = ((String) in.readValue((String.class.getClassLoader())));
+        this.id = ((String) in.readValue((String.class.getClassLoader())));
+        this.color = ((String) in.readValue((String.class.getClassLoader())));
     }
 
     public Category() {
     }
 
-    protected Category(Parcel in) {
-        this.name = in.readString();
-        this.id = in.readString();
-        this.color = in.readString();
+    public String getName() {
+        return name;
     }
 
-    public static final Parcelable.Creator<Category> CREATOR = new Parcelable.Creator<Category>() {
-        @Override
-        public Category createFromParcel(Parcel source) {
-            return new Category(source);
-        }
+    public void setName(String name) {
+        this.name = name;
+    }
 
-        @Override
-        public Category[] newArray(int size) {
-            return new Category[size];
-        }
-    };
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
+    }
+
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this).append("name", name).append("id", id).append("color", color).toString();
+    }
+
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeValue(name);
+        dest.writeValue(id);
+        dest.writeValue(color);
+    }
+
+    public int describeContents() {
+        return  0;
+    }
+
 }

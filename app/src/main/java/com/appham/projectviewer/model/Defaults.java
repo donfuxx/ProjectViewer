@@ -7,38 +7,57 @@ import android.os.Parcelable;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Defaults implements Parcelable {
+import org.apache.commons.lang3.builder.ToStringBuilder;
+
+public class Defaults implements Parcelable
+{
 
     @SerializedName("privacy")
     @Expose
-    public String privacy;
+    private String privacy;
+    public final static Creator<Defaults> CREATOR = new Creator<Defaults>() {
 
-    @Override
-    public int describeContents() {
-        return 0;
+
+        @SuppressWarnings({
+            "unchecked"
+        })
+        public Defaults createFromParcel(Parcel in) {
+            return new Defaults(in);
+        }
+
+        public Defaults[] newArray(int size) {
+            return (new Defaults[size]);
+        }
+
     }
+    ;
 
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(this.privacy);
+    protected Defaults(Parcel in) {
+        this.privacy = ((String) in.readValue((String.class.getClassLoader())));
     }
 
     public Defaults() {
     }
 
-    protected Defaults(Parcel in) {
-        this.privacy = in.readString();
+    public String getPrivacy() {
+        return privacy;
     }
 
-    public static final Parcelable.Creator<Defaults> CREATOR = new Parcelable.Creator<Defaults>() {
-        @Override
-        public Defaults createFromParcel(Parcel source) {
-            return new Defaults(source);
-        }
+    public void setPrivacy(String privacy) {
+        this.privacy = privacy;
+    }
 
-        @Override
-        public Defaults[] newArray(int size) {
-            return new Defaults[size];
-        }
-    };
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this).append("privacy", privacy).toString();
+    }
+
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeValue(privacy);
+    }
+
+    public int describeContents() {
+        return  0;
+    }
+
 }

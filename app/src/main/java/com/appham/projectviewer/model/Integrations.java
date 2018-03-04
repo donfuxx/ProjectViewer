@@ -7,43 +7,70 @@ import android.os.Parcelable;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Integrations implements Parcelable {
+import org.apache.commons.lang3.builder.ToStringBuilder;
+
+public class Integrations implements Parcelable
+{
 
     @SerializedName("microsoftConnectors")
     @Expose
-    public MicrosoftConnectors microsoftConnectors;
+    private MicrosoftConnectors microsoftConnectors;
     @SerializedName("onedrivebusiness")
     @Expose
-    public Onedrivebusiness onedrivebusiness;
+    private Onedrivebusiness onedrivebusiness;
+    public final static Creator<Integrations> CREATOR = new Creator<Integrations>() {
 
-    @Override
-    public int describeContents() {
-        return 0;
+
+        @SuppressWarnings({
+            "unchecked"
+        })
+        public Integrations createFromParcel(Parcel in) {
+            return new Integrations(in);
+        }
+
+        public Integrations[] newArray(int size) {
+            return (new Integrations[size]);
+        }
+
     }
+    ;
 
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeParcelable(this.microsoftConnectors, flags);
-        dest.writeParcelable(this.onedrivebusiness, flags);
+    protected Integrations(Parcel in) {
+        this.microsoftConnectors = ((MicrosoftConnectors) in.readValue((MicrosoftConnectors.class.getClassLoader())));
+        this.onedrivebusiness = ((Onedrivebusiness) in.readValue((Onedrivebusiness.class.getClassLoader())));
     }
 
     public Integrations() {
     }
 
-    protected Integrations(Parcel in) {
-        this.microsoftConnectors = in.readParcelable(MicrosoftConnectors.class.getClassLoader());
-        this.onedrivebusiness = in.readParcelable(Onedrivebusiness.class.getClassLoader());
+    public MicrosoftConnectors getMicrosoftConnectors() {
+        return microsoftConnectors;
     }
 
-    public static final Parcelable.Creator<Integrations> CREATOR = new Parcelable.Creator<Integrations>() {
-        @Override
-        public Integrations createFromParcel(Parcel source) {
-            return new Integrations(source);
-        }
+    public void setMicrosoftConnectors(MicrosoftConnectors microsoftConnectors) {
+        this.microsoftConnectors = microsoftConnectors;
+    }
 
-        @Override
-        public Integrations[] newArray(int size) {
-            return new Integrations[size];
-        }
-    };
+    public Onedrivebusiness getOnedrivebusiness() {
+        return onedrivebusiness;
+    }
+
+    public void setOnedrivebusiness(Onedrivebusiness onedrivebusiness) {
+        this.onedrivebusiness = onedrivebusiness;
+    }
+
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this).append("microsoftConnectors", microsoftConnectors).append("onedrivebusiness", onedrivebusiness).toString();
+    }
+
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeValue(microsoftConnectors);
+        dest.writeValue(onedrivebusiness);
+    }
+
+    public int describeContents() {
+        return  0;
+    }
+
 }
