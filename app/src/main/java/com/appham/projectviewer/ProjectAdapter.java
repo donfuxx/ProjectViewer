@@ -25,6 +25,7 @@ import com.squareup.picasso.Picasso;
  */
 public class ProjectAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
+    public static final String PROJECT = "project";
     private ProjectsList projectsList = new ProjectsList();
 
     @NonNull
@@ -73,7 +74,7 @@ public class ProjectAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
             projectHolder.itemView.setOnClickListener(view -> {
                 Intent intent = new Intent(context, ProjectActivity.class);
-                intent.putExtra("project", project);
+                intent.putExtra(PROJECT, project);
                 context.startActivity(intent);
             });
         }

@@ -20,7 +20,7 @@ public class ProjectActivity extends AppCompatActivity {
         Bundle bundle = getIntent().getExtras();
 
         if (bundle != null) {
-            Project project = (Project) bundle.get("project");
+            Project project = (Project) bundle.get(ProjectAdapter.PROJECT);
 
             if (project == null) return;
 
