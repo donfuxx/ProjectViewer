@@ -57,27 +57,12 @@ public abstract class Spanificator {
                 // don't display "CREATOR" or empty fields
                 if ("CREATOR".equals(name) || StringUtils.isAllBlank(String.valueOf(value))) continue;
 
-                if (isDisplayable(value)) { // String or other displayable value
-                    spanBuilder.append(name)
-                            .append(nameSeparator)
-                            .append(String.valueOf(value))
-                            .append(valueSeparator);
+                if (isDisplayable(value)) { // value is a String or other displayable value
+                    appendDisplayableValue(spanBuilder, nameSeparator, valueSeparator, name, value);
                 } else if (value instanceof Collection) { // value is a Collection of other objects
-                    Collection values = (Collection) value;
-                    spanBuilder.append(name)
-                            .append(nameSeparator);
-                    for (Object obj : values) {
-                        spanBuilder.append(obj.getClass().getSimpleName())
-                                .append(": ")
-                                .append(appendObjectFields(new SpannableStringBuilder(), obj, ": ", ", ", 1f))
-                                .append("\n");
-                    }
-                    spanBuilder.append(valueSeparator);
+                    appendCollection(spanBuilder, nameSeparator, valueSeparator, name, (Collection) value);
                 } else { // value is another pojo
-                    spanBuilder.append(name)
-                            .append(nameSeparator)
-                            .append(appendObjectFields(new SpannableStringBuilder(), value, ": ", ", ", 1f))
-                            .append(valueSeparator);
+                    appendPojo(spanBuilder, nameSeparator, valueSeparator, name, value);
                 }
 
                 spanBuilder.setSpan(new StyleSpan(Typeface.BOLD), start, end, 0);
@@ -89,6 +74,38 @@ public abstract class Spanificator {
         }
 
         return spanBuilder;
+    }
+
+    private static void appendPojo(@NonNull SpannableStringBuilder spanBuilder,
+                                   @NonNull String nameSeparator, @NonNull String valueSeparator,
+                                   String name, Object value) {
+        spanBuilder.append(name)
+                .append(nameSeparator)
+                .append(appendObjectFields(
+                        new SpannableStringBuilder(), value, ": ", ", ", 1f))
+                .append(valueSeparator);
+    }
+
+    private static void appendCollection(@NonNull SpannableStringBuilder spanBuilder,
+                                         @NonNull String nameSeparator,
+                                         @NonNull String valueSeparator, String name,
+                                         Collection value) {
+        spanBuilder.append(name)
+                .append(nameSeparator);
+        for (Object obj : value) {
+            appendPojo(spanBuilder, ": ", "\n", obj.getClass().getSimpleName(), obj);
+        }
+        spanBuilder.append(valueSeparator);
+    }
+
+    private static void appendDisplayableValue(@NonNull SpannableStringBuilder spanBuilder,
+                                               @NonNull String nameSeparator,
+                                               @NonNull String valueSeparator,
+                                               String name, Object value) {
+        spanBuilder.append(name)
+                .append(nameSeparator)
+                .append(String.valueOf(value))
+                .append(valueSeparator);
     }
 
     private static boolean isDisplayable(@Nullable Object value) {
