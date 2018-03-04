@@ -3,6 +3,7 @@ package com.appham.projectviewer;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -53,6 +54,13 @@ public class ProjectListFragment extends Fragment {
         projectListView.setAdapter(projectAdapter);
 
         progressBar = view.findViewById(R.id.progressBar);
+
+        FloatingActionButton btnRefresh = view.findViewById(R.id.btnRefresh);
+        btnRefresh.setOnClickListener(v -> {
+            projectAdapter.setProjectsList(new ProjectsList());
+            projectAdapter.notifyDataSetChanged();
+            callAPI();
+        });
 
         if (savedInstanceState != null) {
             projectAdapter.setProjectsList(savedInstanceState.getParcelable(PROJECTS_LIST));
