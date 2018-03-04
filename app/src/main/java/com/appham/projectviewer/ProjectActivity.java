@@ -18,8 +18,6 @@ import java.util.List;
 
 public class ProjectActivity extends AppCompatActivity {
 
-    private Project project;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,41 +26,42 @@ public class ProjectActivity extends AppCompatActivity {
         Bundle bundle = getIntent().getExtras();
 
         if (bundle != null) {
-            project = (Project) bundle.get("project");
-        }
+            Project project = (Project) bundle.get("project");
 
-        // get all fields and loop through them to display each
-        List<Field> fields = Arrays.asList(project.getClass().getDeclaredFields());
-        String name;
-        Object value;
-        SpannableStringBuilder spanBuilder = new SpannableStringBuilder();
+            if (project == null) return;
 
-        for (Field field : fields) {
-            try {
-                name = field.getName();
-                value = field.get(project);
-                Log.i("fields", "name: " + name + " - value: " + value + " type: " + field.getType());
+            // get all fields and loop through them to display each
+            List<Field> fields = Arrays.asList(project.getClass().getDeclaredFields());
+            String name;
+            Object value;
+            SpannableStringBuilder spanBuilder = new SpannableStringBuilder();
 
-                int startIndex = spanBuilder.length();
-                spanBuilder.append(name).append(": \n")
-                        .append(String.valueOf(value)).append("\n\n")
-                        .setSpan(new StyleSpan(Typeface.BOLD), startIndex, startIndex + name.length(), 0);
+            for (Field field : fields) {
+                try {
+                    name = field.getName();
+                    value = field.get(project);
+                    Log.i("fields", "name: " + name + " - value: " + value + " type: " + field.getType());
 
-                //TODO: Properly display fields that are of a type other than String, int etc.
+                    int startIndex = spanBuilder.length();
+                    spanBuilder.append(name).append(": \n")
+                            .append(String.valueOf(value)).append("\n\n")
+                            .setSpan(new StyleSpan(Typeface.BOLD), startIndex, startIndex + name.length(), 0);
 
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
+                    //TODO: Properly display fields that are of a type other than String, int etc.
+
+                } catch (IllegalAccessException e) {
+                    e.printStackTrace();
+                }
             }
+
+            TextView txtDetails = findViewById(R.id.txtProjectDetails);
+            txtDetails.setText(spanBuilder);
+
+            ImageView imgView = findViewById(R.id.imgProjectDetails);
+            Picasso.with(this).load(project.logo)
+                    .error(R.mipmap.ic_launcher_round)
+                    .into(imgView);
+
         }
-
-        TextView txtDetails = findViewById(R.id.txtProjectDetails);
-        txtDetails.setText(spanBuilder);
-
-        ImageView imgView = findViewById(R.id.imgProjectDetails);
-        Picasso.with(this).load(project.logo)
-                .error(R.mipmap.ic_launcher_round)
-                .into(imgView);
-
-
     }
 }
