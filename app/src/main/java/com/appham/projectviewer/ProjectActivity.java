@@ -24,11 +24,9 @@ public class ProjectActivity extends AppCompatActivity {
 
             if (project == null) return;
 
-            SpannableStringBuilder spanBuilder = new SpannableStringBuilder();
-            Spanificator.appendObjectFields(spanBuilder, project, ": \n", "\n\n");
-
             TextView txtDetails = findViewById(R.id.txtProjectDetails);
-            txtDetails.setText(spanBuilder);
+            txtDetails.setText(Spanificator.appendObjectFields(
+                    new SpannableStringBuilder(), project, ": \n", "\n\n", 1.2f));
 
             ImageView imgView = findViewById(R.id.imgProjectDetails);
             Picasso.with(this).load(project.getLogo())

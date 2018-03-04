@@ -4,6 +4,7 @@ import android.graphics.Typeface;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.SpannableStringBuilder;
+import android.text.style.RelativeSizeSpan;
 import android.text.style.StyleSpan;
 import android.util.Log;
 
@@ -30,12 +31,13 @@ public abstract class Spanificator {
      * @param pojo the object to "spanify"
      * @param nameSeparator the String to separate name from value
      * @param valueSeparator the String to put after the value
+     * @param relativeSize the relative size of the name
      * @return the spanBuilder with styled field names and values
      */
     @NonNull
     public static SpannableStringBuilder appendObjectFields(
             @NonNull SpannableStringBuilder spanBuilder, @NonNull Object pojo,
-            @NonNull String nameSeparator, @NonNull String valueSeparator) {
+            @NonNull String nameSeparator, @NonNull String valueSeparator, float relativeSize) {
 
         // get all fields and loop through them to display each
         List<Field> fields = Arrays.asList(pojo.getClass().getDeclaredFields());
@@ -66,18 +68,19 @@ public abstract class Spanificator {
                     for (Object obj : values) {
                         spanBuilder.append(obj.getClass().getSimpleName())
                                 .append(": ")
-                                .append(appendObjectFields(new SpannableStringBuilder(), obj, ": ", ", "))
+                                .append(appendObjectFields(new SpannableStringBuilder(), obj, ": ", ", ", 1f))
                                 .append("\n");
                     }
                     spanBuilder.append(valueSeparator);
                 } else { // value is another pojo
                     spanBuilder.append(name)
                             .append(nameSeparator)
-                            .append(appendObjectFields(new SpannableStringBuilder(), value, ": ", "; "))
+                            .append(appendObjectFields(new SpannableStringBuilder(), value, ": ", ", ", 1f))
                             .append(valueSeparator);
                 }
 
                 spanBuilder.setSpan(new StyleSpan(Typeface.BOLD), startIndex, startIndex + name.length(), 0);
+                spanBuilder.setSpan(new RelativeSizeSpan(relativeSize), startIndex, startIndex + name.length(), 0);
 
             } catch (IllegalAccessException e) {
                 e.printStackTrace();
