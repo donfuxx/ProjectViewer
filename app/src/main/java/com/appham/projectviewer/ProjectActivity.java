@@ -30,6 +30,7 @@ public class ProjectActivity extends AppCompatActivity {
 
             ImageView imgView = findViewById(R.id.imgProjectDetails);
             Picasso.with(this).load(project.getLogo())
+                    .placeholder(android.R.drawable.progress_indeterminate_horizontal)
                     .error(R.mipmap.ic_launcher_round)
                     .into(imgView);
 
