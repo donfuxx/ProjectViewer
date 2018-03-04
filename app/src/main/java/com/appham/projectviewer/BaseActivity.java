@@ -29,7 +29,7 @@ public abstract class BaseActivity extends AppCompatActivity {
                     snackbar = Snackbar.make(findViewById(android.R.id.content),
                             R.string.app_developed_by, Snackbar.LENGTH_LONG)
                             .setDuration(10000)
-                            .setAction("Google Play", view -> {
+                            .setAction(R.string.google_play_store, view -> {
                                 try {
                                     openStore(Uri.parse(
                                             "market://dev?id=Thomas+Fuchs-Martin"));

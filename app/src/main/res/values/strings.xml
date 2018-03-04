@@ -3,4 +3,5 @@
     <string name="delete_not_yet_implemented">TODO: Deleting the project from db is not yet implemented!</string>
     <string name="menu_about">about this app</string>
     <string name="app_developed_by">App developed by Thomas Fuchs-Martin</string>
+    <string name="google_play_store">GOOGLE PLAY STORE</string>
 </resources>
