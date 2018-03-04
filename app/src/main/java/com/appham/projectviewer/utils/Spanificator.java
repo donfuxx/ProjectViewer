@@ -51,7 +51,8 @@ public abstract class Spanificator {
                 value = field.get(pojo);
                 Log.i("fields", "name: " + name + " - value: " + value + " type: " + field.getType());
 
-                int startIndex = spanBuilder.length();
+                int start = spanBuilder.length();
+                int end = spanBuilder.length() + name.length();
 
                 // don't display "CREATOR" or empty fields
                 if ("CREATOR".equals(name) || StringUtils.isAllBlank(String.valueOf(value))) continue;
@@ -79,8 +80,8 @@ public abstract class Spanificator {
                             .append(valueSeparator);
                 }
 
-                spanBuilder.setSpan(new StyleSpan(Typeface.BOLD), startIndex, startIndex + name.length(), 0);
-                spanBuilder.setSpan(new RelativeSizeSpan(relativeSize), startIndex, startIndex + name.length(), 0);
+                spanBuilder.setSpan(new StyleSpan(Typeface.BOLD), start, end, 0);
+                spanBuilder.setSpan(new RelativeSizeSpan(relativeSize), start, end, 0);
 
             } catch (IllegalAccessException e) {
                 e.printStackTrace();
