@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -52,6 +53,30 @@ public class ProjectListFragment extends Fragment {
         projectListView.setLayoutManager(projectsLayoutManager);
 
         projectListView.setAdapter(projectAdapter);
+
+        // delete project item from list by swipe right
+        ItemTouchHelper.SimpleCallback simpleItemTouchCallback = new ItemTouchHelper.SimpleCallback(0,
+                ItemTouchHelper.RIGHT) {
+
+            @Override
+            public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
+                return false;
+            }
+
+
+            @Override
+            public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
+
+                //TODO: also delete from backend db
+                Toast.makeText(getActivity(),
+                        R.string.delete_not_yet_implemented, Toast.LENGTH_LONG).show();
+
+                int pos = viewHolder.getAdapterPosition();
+                projectAdapter.getProjectsList().getProjects().remove(pos);
+                projectAdapter.notifyItemRemoved(pos);
+            }
+        };
+        new ItemTouchHelper(simpleItemTouchCallback).attachToRecyclerView(projectListView);
 
         progressBar = view.findViewById(R.id.progressBar);
 

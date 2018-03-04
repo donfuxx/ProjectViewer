@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">ProjectViewer</string>
+    <string name="delete_not_yet_implemented">TODO: Deleting the project from db is not yet implemented!</string>
 </resources>
