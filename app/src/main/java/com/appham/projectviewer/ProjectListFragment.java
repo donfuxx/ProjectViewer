@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.appham.projectviewer.api.ApiFactory;
@@ -26,6 +27,7 @@ public class ProjectListFragment extends Fragment {
 
     public static String TAG = "ProjectListFragment";
     private ProjectAdapter projectAdapter = new ProjectAdapter();
+    private ProgressBar progressBar;
 
     @Nullable
     @Override
@@ -37,17 +39,19 @@ public class ProjectListFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
 
         // get recycler-list of project results
-        RecyclerView projectList = view.findViewById(R.id.listProject);
+        RecyclerView projectListView = view.findViewById(R.id.listProject);
 
         // use this setting to improve performance if you know that changes
         // in content do not change the layout size of the RecyclerView
-        projectList.setHasFixedSize(true);
+        projectListView.setHasFixedSize(true);
 
         // use a linear layout manager
         LinearLayoutManager projectsLayoutManager = new LinearLayoutManager(getActivity());
-        projectList.setLayoutManager(projectsLayoutManager);
+        projectListView.setLayoutManager(projectsLayoutManager);
 
-        projectList.setAdapter(projectAdapter);
+        projectListView.setAdapter(projectAdapter);
+
+        progressBar = view.findViewById(R.id.progressBar);
 
         callAPI();
 
@@ -57,6 +61,7 @@ public class ProjectListFragment extends Fragment {
     }
 
     private void callAPI() {
+        progressBar.setVisibility(View.VISIBLE);
         ProjectsApi projectsApi = ApiFactory.createProjectsApi();
         projectsApi.getProjects().subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -64,6 +69,8 @@ public class ProjectListFragment extends Fragment {
     }
 
     private int onNext(ProjectsList projectsList) {
+        progressBar.setVisibility(View.GONE);
+
         projectAdapter.setProjects(projectsList.getProjects());
         projectAdapter.notifyDataSetChanged();
 
@@ -74,5 +81,6 @@ public class ProjectListFragment extends Fragment {
     private void onError(Throwable throwable) {
         throwable.printStackTrace();
         Toast.makeText(this.getActivity(), throwable.getLocalizedMessage(), Toast.LENGTH_LONG).show();
+        progressBar.setVisibility(View.GONE);
     }
 }
