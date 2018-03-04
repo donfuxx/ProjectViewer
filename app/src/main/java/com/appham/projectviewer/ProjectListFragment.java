@@ -3,6 +3,7 @@ package com.appham.projectviewer;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.annotation.UiThread;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -108,10 +109,12 @@ public class ProjectListFragment extends Fragment {
         progressBar.setVisibility(View.VISIBLE);
         ProjectsApi projectsApi = ApiFactory.createProjectsApi();
         projectsApi.getProjects().subscribeOn(Schedulers.io())
+                .retry(2)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(this::onNext, this::onError);
     }
 
+    @UiThread
     private int onNext(ProjectsList projectsList) {
         progressBar.setVisibility(View.GONE);
 
@@ -122,6 +125,7 @@ public class ProjectListFragment extends Fragment {
 
     }
 
+    @UiThread
     private void onError(Throwable throwable) {
         throwable.printStackTrace();
         Toast.makeText(this.getActivity(), throwable.getLocalizedMessage(), Toast.LENGTH_LONG).show();
