@@ -17,17 +17,15 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.appham.projectviewer.model.Project;
+import com.appham.projectviewer.model.ProjectsList;
 import com.squareup.picasso.Picasso;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @author thomas
  */
 public class ProjectAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private List<Project> projects = new ArrayList<>();
+    private ProjectsList projectsList = new ProjectsList();
 
     @NonNull
     @Override
@@ -42,7 +40,7 @@ public class ProjectAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
         if (holder instanceof ProjectHolder) {
             ProjectHolder projectHolder = (ProjectHolder) holder;
-            Project project = projects.get(position);
+            Project project = projectsList.getProjects().get(position);
             projectHolder.txtName.setText(project.getName());
             projectHolder.txtDesc.setText(project.getDescription());
             projectHolder.txtCompany.setText(project.getCompany().getName());
@@ -81,16 +79,15 @@ public class ProjectAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         }
     }
 
-
     @Override
     public int getItemCount() {
-        return projects.size();
+        return projectsList.getProjects().size();
     }
 
     class ProjectHolder extends RecyclerView.ViewHolder {
 
-
         final TextView txtName, txtDesc, txtCompany;
+
         final ImageView imgLogo;
 
         ProjectHolder(View itemView) {
@@ -101,10 +98,13 @@ public class ProjectAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             txtCompany = itemView.findViewById(R.id.txtCompany);
             imgLogo = itemView.findViewById(R.id.imgProject);
         }
-
     }
 
-    void setProjects(List<Project> projects) {
-        this.projects = projects;
+    public ProjectsList getProjectsList() {
+        return projectsList;
+    }
+
+    public void setProjectsList(ProjectsList projectsList) {
+        this.projectsList = projectsList;
     }
 }

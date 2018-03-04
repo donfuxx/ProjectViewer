@@ -26,6 +26,7 @@ import io.reactivex.schedulers.Schedulers;
 public class ProjectListFragment extends Fragment {
 
     public static String TAG = "ProjectListFragment";
+    public static String PROJECTS_LIST = "projects-list";
     private ProjectAdapter projectAdapter = new ProjectAdapter();
     private ProgressBar progressBar;
 
@@ -53,12 +54,22 @@ public class ProjectListFragment extends Fragment {
 
         progressBar = view.findViewById(R.id.progressBar);
 
-        callAPI();
-
-        setRetainInstance(true);
+        if (savedInstanceState != null) {
+            projectAdapter.setProjectsList(savedInstanceState.getParcelable(PROJECTS_LIST));
+            projectAdapter.notifyDataSetChanged();
+        } else {
+            callAPI();
+        }
 
         super.onViewCreated(view, savedInstanceState);
     }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        outState.putParcelable(PROJECTS_LIST, projectAdapter.getProjectsList());
+        super.onSaveInstanceState(outState);
+    }
+
 
     private void callAPI() {
         progressBar.setVisibility(View.VISIBLE);
@@ -71,7 +82,7 @@ public class ProjectListFragment extends Fragment {
     private int onNext(ProjectsList projectsList) {
         progressBar.setVisibility(View.GONE);
 
-        projectAdapter.setProjects(projectsList.getProjects());
+        projectAdapter.setProjectsList(projectsList);
         projectAdapter.notifyDataSetChanged();
 
         return Log.i("subscribe", projectsList.getProjects().size() + " projects loaded");

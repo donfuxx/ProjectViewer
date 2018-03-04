@@ -10,10 +10,12 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        ProjectListFragment projectListFragment = new ProjectListFragment();
-        getFragmentManager().beginTransaction()
-                .add(R.id.frameProjects, projectListFragment, ProjectListFragment.TAG)
-                .commit();
+        if (getFragmentManager().findFragmentByTag(ProjectListFragment.TAG) == null) {
+            ProjectListFragment projectListFragment = new ProjectListFragment();
+            getFragmentManager().beginTransaction()
+                    .add(R.id.frameProjects, projectListFragment, ProjectListFragment.TAG)
+                    .commit();
+        }
     }
 
 }
