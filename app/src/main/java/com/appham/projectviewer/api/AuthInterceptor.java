@@ -17,6 +17,11 @@ public class AuthInterceptor implements Interceptor {
 
     private String credentials;
 
+    /**
+     * Instantiate an Authentication Interceptor to be used with okhttp.
+     * @param user
+     * @param password
+     */
     AuthInterceptor(String user, String password) {
         this.credentials = Credentials.basic(user, password);
     }

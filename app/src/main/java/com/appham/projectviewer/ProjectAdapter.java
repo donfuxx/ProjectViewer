@@ -59,6 +59,7 @@ public class ProjectAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 animator.setInterpolator(new LinearInterpolator());
                 animator.start();
 
+                // screen width and height values for calculating optimal image size
                 int screenWidthPx = Resources.getSystem().getDisplayMetrics().widthPixels;
                 int screenHeightPx = Resources.getSystem().getDisplayMetrics().heightPixels;
 
@@ -72,6 +73,7 @@ public class ProjectAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                         .into(projectHolder.imgLogo);
             }
 
+            // on click launch project details activity
             projectHolder.itemView.setOnClickListener(view -> {
                 Intent intent = new Intent(context, ProjectActivity.class);
                 intent.putExtra(PROJECT, project);

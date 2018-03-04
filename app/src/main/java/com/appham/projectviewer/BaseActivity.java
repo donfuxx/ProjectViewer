@@ -8,6 +8,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 
+/**
+ * The base activity with info button in action bar
+ */
 public abstract class BaseActivity extends AppCompatActivity {
 
     Snackbar snackbar;

@@ -15,14 +15,20 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class ApiFactory {
 
 
+    /**
+     * Make a retrofit projects API implementation
+     * @return ProjectsApi
+     */
     public static ProjectsApi createProjectsApi() {
         return createRetrofit().create(ProjectsApi.class);
     }
 
+    @NonNull
     public static Retrofit createRetrofit() {
         return createRetrofit(createOkHttp());
     }
 
+    @NonNull
     public static OkHttpClient createOkHttp() {
         HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
         loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
@@ -32,6 +38,7 @@ public class ApiFactory {
                 .build();
     }
 
+    @NonNull
     public static Retrofit createRetrofit(@NonNull OkHttpClient okHttp) {
         return new Retrofit.Builder()
                 .baseUrl(ProjectsApi.BASE_URL)

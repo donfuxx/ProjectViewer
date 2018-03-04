@@ -6,7 +6,6 @@ import android.support.annotation.Nullable;
 import android.text.SpannableStringBuilder;
 import android.text.style.RelativeSizeSpan;
 import android.text.style.StyleSpan;
-import android.util.Log;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -49,7 +48,7 @@ public abstract class Spanificator {
                 name = field.getName();
                 field.setAccessible(true);
                 value = field.get(pojo);
-                Log.i("fields", "name: " + name + " - value: " + value + " type: " + field.getType());
+//                Log.i("fields", "name: " + name + " - value: " + value + " type: " + field.getType());
 
                 int start = spanBuilder.length();
                 int end = spanBuilder.length() + name.length();

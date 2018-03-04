@@ -6,6 +6,8 @@ import io.reactivex.Observable;
 import retrofit2.http.GET;
 
 /**
+ * The Projects API including user & password for authentication
+ *
  * @author thomas
  */
 

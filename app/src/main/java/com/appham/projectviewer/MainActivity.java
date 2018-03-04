@@ -9,6 +9,7 @@ public class MainActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // attach project list fragment if there isn't one already
         if (getFragmentManager().findFragmentByTag(ProjectListFragment.TAG) == null) {
             ProjectListFragment projectListFragment = new ProjectListFragment();
             getFragmentManager().beginTransaction()

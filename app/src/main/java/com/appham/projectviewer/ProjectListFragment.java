@@ -108,23 +108,30 @@ public class ProjectListFragment extends Fragment {
     private void callAPI() {
         progressBar.setVisibility(View.VISIBLE);
         ProjectsApi projectsApi = ApiFactory.createProjectsApi();
-        projectsApi.getProjects().subscribeOn(Schedulers.io())
+        projectsApi.getProjects().subscribeOn(Schedulers.io()) //do work in background thread
                 .retry(2)
-                .observeOn(AndroidSchedulers.mainThread())
+                .observeOn(AndroidSchedulers.mainThread()) //do emissions on main thread
                 .subscribe(this::onNext, this::onError);
     }
 
+    /**
+     * Update the adapter with provided projects list when API call finished with success.
+     * @param projectsList
+     */
     @UiThread
-    private int onNext(ProjectsList projectsList) {
+    private void onNext(ProjectsList projectsList) {
         progressBar.setVisibility(View.GONE);
 
         projectAdapter.setProjectsList(projectsList);
         projectAdapter.notifyDataSetChanged();
 
-        return Log.i("subscribe", projectsList.getProjects().size() + " projects loaded");
-
+        Log.i("subscribe", projectsList.getProjects().size() + " projects loaded");
     }
 
+    /**
+     * Show a toast msg indicating the problem when API call failed.
+     * @param throwable
+     */
     @UiThread
     private void onError(Throwable throwable) {
         throwable.printStackTrace();
