@@ -2,16 +2,22 @@ package com.appham.projectviewer;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
+import android.support.test.espresso.IdlingRegistry;
 import android.support.test.espresso.contrib.RecyclerViewActions;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
+import com.appham.projectviewer.utils.RecyclerViewItemCountAssertion;
+import com.appham.projectviewer.utils.ViewIdlingResource;
+
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
+import static android.support.test.espresso.action.ViewActions.swipeRight;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
@@ -29,6 +35,12 @@ public class MainActivityTest {
     @Rule
     public ActivityTestRule<MainActivity> mActivityRule = new ActivityTestRule<>(
             MainActivity.class);
+
+    @Before
+    public void setup() {
+        ViewIdlingResource progressBar = new ViewIdlingResource(mActivityRule.getActivity().findViewById(R.id.progressBar));
+        IdlingRegistry.getInstance().register(progressBar);
+    }
 
     @Test
     public void useAppContext() throws Exception {
@@ -50,6 +62,13 @@ public class MainActivityTest {
         onView(withId(R.id.listProject)).perform(
                 RecyclerViewActions.actionOnItemAtPosition(0, click()));
         onView(withId(R.id.txtProjectDetails)).check(matches(isDisplayed()));
+    }
+
+    @Test
+    public void testSwipeRightDeletesItem() {
+        onView(withId(R.id.listProject)).perform(
+                RecyclerViewActions.actionOnItemAtPosition(0, swipeRight()));
+        onView(withId(R.id.listProject)).check(new RecyclerViewItemCountAssertion(1));
     }
 
 }
