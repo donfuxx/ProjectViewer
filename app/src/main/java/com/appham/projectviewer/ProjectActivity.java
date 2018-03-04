@@ -1,7 +1,6 @@
 package com.appham.projectviewer;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.text.SpannableStringBuilder;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -10,7 +9,7 @@ import com.appham.projectviewer.model.Project;
 import com.appham.projectviewer.utils.Spanificator;
 import com.squareup.picasso.Picasso;
 
-public class ProjectActivity extends AppCompatActivity {
+public class ProjectActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
