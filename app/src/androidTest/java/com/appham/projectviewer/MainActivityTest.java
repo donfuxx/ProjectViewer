@@ -21,6 +21,7 @@ import static android.support.test.espresso.action.ViewActions.swipeRight;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
+import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.core.IsNot.not;
 import static org.junit.Assert.assertEquals;
 
@@ -69,6 +70,19 @@ public class MainActivityTest {
         onView(withId(R.id.listProject)).perform(
                 RecyclerViewActions.actionOnItemAtPosition(0, swipeRight()));
         onView(withId(R.id.listProject)).check(new RecyclerViewItemCountAssertion(1));
+    }
+
+    @Test
+    public void testClickInfoShowsGooglePlayButton() {
+        onView(withId(R.id.action_about)).perform(click());
+        onView(withText(R.string.google_play_store)).check(matches(isDisplayed()));
+    }
+
+    @Test
+    public void testClickRefreshButton() {
+        onView(withId(R.id.btnRefresh)).perform(click());
+        onView(withId(R.id.progressBar)).check(matches(not(isDisplayed())));
+        onView(withId(R.id.listProject)).check(new RecyclerViewItemCountAssertion(2));
     }
 
 }

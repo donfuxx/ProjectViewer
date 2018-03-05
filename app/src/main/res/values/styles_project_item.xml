@@ -51,7 +51,7 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_below">@id/layProjectContent</item>
         <item name="android:layout_alignParentRight">true</item>
-        <item name="android:textColor">@android:color/darker_gray</item>
+        <item name="android:textColor">@color/colorAccent</item>
         <item name="android:singleLine">true</item>
         <item name="android:ellipsize">start</item>
         <item name="android:padding">4dp</item>
