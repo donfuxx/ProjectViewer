@@ -81,7 +81,7 @@ public abstract class Spanificator {
         spanBuilder.append(name)
                 .append(nameSeparator)
                 .append(appendObjectFields(
-                        new SpannableStringBuilder(), value, ": ", ", ", 1f))
+                        new SpannableStringBuilder(), value, ": ", ", ", 1f)) //FIXME: possible NPE if value is null
                 .append(valueSeparator);
     }
 

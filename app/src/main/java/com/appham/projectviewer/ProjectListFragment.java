@@ -81,6 +81,7 @@ public class ProjectListFragment extends Fragment {
 
         progressBar = view.findViewById(R.id.progressBar);
 
+        //TODO: Maybe FAB is not the best design solution here, also find better sized icons
         FloatingActionButton btnRefresh = view.findViewById(R.id.btnRefresh);
         btnRefresh.setOnClickListener(v -> {
             projectAdapter.setProjectsList(new ProjectsList());
@@ -105,13 +106,13 @@ public class ProjectListFragment extends Fragment {
     }
 
 
-    private void callAPI() {
+    private void callAPI() { //TODO: move this to another layer (maybe implement MVP pattern)
         progressBar.setVisibility(View.VISIBLE);
         ProjectsApi projectsApi = ApiFactory.createProjectsApi();
         projectsApi.getProjects().subscribeOn(Schedulers.io()) //do work in background thread
                 .retry(2)
                 .observeOn(AndroidSchedulers.mainThread()) //do emissions on main thread
-                .subscribe(this::onNext, this::onError);
+                .subscribe(this::onNext, this::onError); //TODO: when to cancel network requests?
     }
 
     /**
